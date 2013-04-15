@@ -1,7 +1,8 @@
 ## tijasmine Version 0.1
 
 A [jasmine][1] implementation for Appcelerator Titanium prepared originally by
-[Bill Dawson][10].
+[Bill Dawson][10]. Inspired by [Aaron Saunders][11]'
+[ci.behave.test][12].
 
 ## Usage
 
@@ -39,10 +40,6 @@ A [jasmine][1] implementation for Appcelerator Titanium prepared originally by
 
 - The console reporter is the only reporter. Fork me and add more!
 
-- As of version 0.1 this has **NOT** been tested on anything other than Titanium
-  Android (not iOS).  Try it out on iOS and if it fails feel free to send a pull
-  request with a fix or leave an [Issue][9].
-    
 ## License
 
 The Titanium-specific stuff is...
@@ -67,3 +64,5 @@ Jasmine is...
 [8]: LICENSE-jasmine.txt
 [9]: http://github.com/billdawson/tijasmine/issues
 [10]: http://billdawson.com
+[11]: http://twitter.com/aaronksaunders
+[12]: http://github.com/aaronksaunders/ci.behave.test

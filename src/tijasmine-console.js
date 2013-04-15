@@ -35,10 +35,10 @@ function ConsoleReporter() {
 			console.log("  -  " + result.description + " (ok)");
 
 		} else if (result.status == "failed") {
-			console.error("  -  " + result.description + " (FAILED)");
+			console.log("  -  " + result.description + " (FAILED)");
 			failureCount++;
 			result.failedExpectations.forEach( function(expectation) {
-				console.error("  -  -  " + expectation.message);
+				console.log("  -  -  " + expectation.message);
 			});
 		}
 	};
@@ -46,7 +46,11 @@ function ConsoleReporter() {
 	this.jasmineDone = function() {
 		console.log("=========================");
 		if (failureCount > 0) {
-			console.error("THERE WERE FAILURES");
+			// Order of log statements in iOS doesn't
+			// seem to be guaranteed. I want this last.
+			setTimeout(function() {
+				console.error("THERE WERE FAILURES");
+			},30);
 		} else {
 			console.log("Congratulations! All passed.");
 		}
