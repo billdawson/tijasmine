@@ -65,5 +65,5 @@ Jasmine is...
 [6]: example/specs
 [7]: LICENSE.txt
 [8]: LICENSE-jasmine.txt
-[9]: issues
+[9]: http://github.com/billdawson/tijasmine/issues
 [10]: http://billdawson.com
