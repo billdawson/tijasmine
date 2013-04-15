@@ -8,7 +8,7 @@ rm -rf build/*
 
 mkdir build/tijasmine
 cp jasmine/lib/jasmine-core/jasmine.js build/tijasmine
-cp src/tiboot.js build/tijasmine
+cp src/*.js build/tijasmine
 
 cd build
 zip -r ../dist/tijasmine.zip tijasmine
