@@ -1,6 +1,6 @@
 var tijasmine = require("/tijasmine/tijasmine"),
 	reporter = new (require("/tijasmine/tijasmine-console").ConsoleReporter)();
 
-tijasmine.addSpecModule("/specs/myspec");
+tijasmine.addSpecModules("/specs/myspec", "/specs/myotherspec");
 tijasmine.addReporter(reporter);
 tijasmine.execute();

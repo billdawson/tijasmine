@@ -1,6 +1,6 @@
 require("/tijasmine/tijasmine").infect(this);
 
-describe("My First Suite", function() {
+describe("My First Suite of another spec", function() {
 	it("ensures that true is true", function() {
 		expect(true).toEqual(true);
 	});
@@ -9,7 +9,7 @@ describe("My First Suite", function() {
 	});
 });
 
-describe("My Second Suite", function() {
+describe("My Second Suite of another spec", function() {
 	it("ensures that 'a' is still 'a' in this world", function() {
 		expect("a").toEqual("a");
 	});
