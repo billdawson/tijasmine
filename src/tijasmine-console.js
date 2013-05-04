@@ -14,10 +14,14 @@
    limitations under the License.
 */
 
-function ConsoleReporter() {
+function ConsoleReporter(finishCallback) {
 	var failureCount = 0;
+	var passedCount = 0;
 
-	this.jasmineStarted = function(options) { };
+	this.jasmineStarted = function(options) {
+		failureCount = 0;
+		passedCount = 0;
+	};
 
 	this.suiteStarted = function(result) {
 		console.log("-------------------------");
@@ -32,6 +36,7 @@ function ConsoleReporter() {
 		var expectation;
 
 		if (result.status == "passed") {
+			passedCount++;
 			console.log("  -  " + result.description + " (ok)");
 
 		} else if (result.status == "failed") {
@@ -54,6 +59,10 @@ function ConsoleReporter() {
 		} else {
 			console.log("Congratulations! All passed.");
 		}
+		finishCallback && finishCallback({
+			failed: failureCount,
+			passed: passedCount
+		});
 	};
 }
 
