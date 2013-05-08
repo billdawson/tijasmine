@@ -15,6 +15,38 @@
 */
 
 function ConsoleReporter(finishCallback) {
+	this.reportRunnerStarting = function(runner) {
+		var suites = runner.topLevelSuites(),
+			i = 0,
+			suite;
+
+
+		for (; i < suites.length; i++) {
+			suite = suites[i];
+			console.log("=====================");
+			console.log("Suite: " + suite.id);
+			console.log("Description: " + suite.description);
+		}
+	};
+
+	this.reportRunnerResults = function(runner) {
+		console.log("If I knew what I was doing, I'd report results");
+		console.log("Failure count: " + runner.results().failedCount);
+		// Presumably this is where I could call finishCallback);
+	};
+
+	this.reportSuiteResults = function(suite) {
+		console.log("If I knew what I was doing, I'd report SUITE results");
+	};
+
+	this.reportSpecResults = function(spec) {
+		console.log("If I knew what I was doing, I'd report SPEC results");
+	};
+}
+
+
+// For jasmine 2, not yet released.
+function ConsoleReporter2(finishCallback) {
 	var failureCount = 0;
 	var passedCount = 0;
 
@@ -66,4 +98,5 @@ function ConsoleReporter(finishCallback) {
 	};
 }
 
+exports.ConsoleReporter2 = ConsoleReporter2;
 exports.ConsoleReporter = ConsoleReporter;
