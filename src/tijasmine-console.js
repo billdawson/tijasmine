@@ -15,32 +15,61 @@
 */
 
 function ConsoleReporter(finishCallback) {
+	var startedAt,
+		sep = "-------------------------------------",
+		failedCount = 0,
+		passedCount = 0,
+		runningSuite;
+
 	this.reportRunnerStarting = function(runner) {
-		var suites = runner.topLevelSuites(),
-			i = 0,
-			suite;
-
-
-		for (; i < suites.length; i++) {
-			suite = suites[i];
-			console.log("=====================");
-			console.log("Suite: " + suite.id);
-			console.log("Description: " + suite.description);
-		}
+		startedAt = new Date();
+		failedCount = passedCount = 0;
+		runningSuite = null;
 	};
 
 	this.reportRunnerResults = function(runner) {
-		console.log("If I knew what I was doing, I'd report results");
-		console.log("Failure count: " + runner.results().failedCount);
-		// Presumably this is where I could call finishCallback);
+		if (finishCallback) {
+			finishCallback({
+				failed: failedCount,
+				passed: passedCount,
+				elapsed: ((new Date()) - startedAt)
+			});
+		}
+		console.log(sep.replace(/-/g, "="));
+		if (failedCount) {
+			console.log("THERE WERE FAILURES");
+		} else {
+			console.log("Congratulations! All passed.");
+		}
 	};
 
 	this.reportSuiteResults = function(suite) {
-		console.log("If I knew what I was doing, I'd report SUITE results");
+	};
+
+	this.reportSpecStarting = function(spec) {
+		var suite = spec.suite;
+		if (!runningSuite || runningSuite.id !== suite.id) {
+			runningSuite = suite;
+			console.log(sep);
+			console.log(suite.description + ":");
+		}
 	};
 
 	this.reportSpecResults = function(spec) {
-		console.log("If I knew what I was doing, I'd report SPEC results");
+		var results = spec.results(),
+			item;
+
+		console.log(" - " + spec.description + " (" + (results.failedCount ? "FAILED" : "ok") + ")");
+		passedCount += results.passedCount;
+		failedCount += results.failedCount;
+
+		if (results.items_) {
+			results.items_.forEach(function(item) {
+				if (!item.passed_ && item.message) {
+					console.log(" - - " + item.message);
+				}
+			});
+		}
 	};
 }
 
@@ -91,10 +120,12 @@ function ConsoleReporter2(finishCallback) {
 		} else {
 			console.log("Congratulations! All passed.");
 		}
-		finishCallback && finishCallback({
-			failed: failureCount,
-			passed: passedCount
-		});
+		if (finishCallback) {
+			finishCallback({
+				failed: failureCount,
+				passed: passedCount
+			});
+		}
 	};
 }
 

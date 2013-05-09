@@ -76,11 +76,7 @@ var jasmineInterface = {
     },
 
     expect: function(actual) {
-      return env.expect(actual);
-    },
-
-    pending: function() {
-      return env.pending();
+      return env.currentSpec.expect(actual);
     },
 
     addMatchers: function(matchers) {
@@ -89,7 +85,7 @@ var jasmineInterface = {
 
     spyOn: function(obj, methodName) {
       return env.spyOn(obj, methodName);
-    },
+    }
 
 };
 
