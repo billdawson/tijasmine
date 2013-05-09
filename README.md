@@ -1,6 +1,6 @@
 ## tijasmine Version 0.1
 
-A [jasmine][1] implementation for Appcelerator Titanium prepared originally by
+A [jasmine][1] *1.3.1* implementation for Appcelerator Titanium prepared originally by
 [Bill Dawson][10]. Inspired by [Aaron Saunders][11]'
 [ci.behave.test][12].
 
@@ -36,7 +36,7 @@ A [jasmine][1] implementation for Appcelerator Titanium prepared originally by
 
 ## Notes
 
-- It's based on the 2.0 alpha of `jasmine`, which seemed fine for me.
+- It's based on the jasmine 1.3.1, which is not the current master branch at the jasmine project (they are working on 2.0).
 
 - The console reporter is the only reporter. Fork me and add more!
 
