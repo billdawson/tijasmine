@@ -1,4 +1,4 @@
-## tijasmine Version 0.1
+## tijasmine Version 1.0.0
 
 A [jasmine][1] *1.3.1* implementation for Appcelerator Titanium prepared originally by
 [Bill Dawson][10]. Inspired by [Aaron Saunders][11]'
