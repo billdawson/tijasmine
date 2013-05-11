@@ -24,6 +24,10 @@ A [jasmine][1] *1.3.1* implementation for Appcelerator Titanium prepared origina
   which will infect (for a good cause!) your spec module's context with the
   necessary `jasmine` functions such as `describe`, `it`, et al.
 
+  One of the included spec files under `example/specs` is the complete set
+  of tests run at the [Jasmine 1.3.1 intro page][1], so if you look at that
+  one you basically get the Jasmine documentation.
+
 - Somewhere in your app code you'll want to kick it all off with code such as:
 
         
