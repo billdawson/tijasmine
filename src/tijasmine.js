@@ -5,7 +5,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+		http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -50,42 +50,52 @@ var jasmine = require("./jasmine").jasmine,
 	specFiles = [],
 	jasmineInterface;
 
-var jasmineInterface = {
-    describe: function(description, specDefinitions) {
-      return env.describe(description, specDefinitions);
-    },
+jasmineInterface = {
+	describe: function(description, specDefinitions) {
+		return env.describe(description, specDefinitions);
+	},
 
-    xdescribe: function(description, specDefinitions) {
-      return env.xdescribe(description, specDefinitions);
-    },
+	xdescribe: function(description, specDefinitions) {
+		return env.xdescribe(description, specDefinitions);
+	},
 
-    it: function(desc, func) {
-      return env.it(desc, func);
-    },
+	it: function(desc, func) {
+		return env.it(desc, func);
+	},
 
-    xit: function(desc, func) {
-      return env.xit(desc, func);
-    },
+	xit: function(desc, func) {
+		return env.xit(desc, func);
+	},
 
-    beforeEach: function(beforeEachFunction) {
-      return env.beforeEach(beforeEachFunction);
-    },
+	beforeEach: function(beforeEachFunction) {
+		return env.beforeEach(beforeEachFunction);
+	},
 
-    afterEach: function(afterEachFunction) {
-      return env.afterEach(afterEachFunction);
-    },
+	afterEach: function(afterEachFunction) {
+		return env.afterEach(afterEachFunction);
+	},
 
-    expect: function(actual) {
-      return env.currentSpec.expect(actual);
-    },
+	expect: function(actual) {
+		return env.currentSpec.expect(actual);
+	},
 
-    addMatchers: function(matchers) {
-      return env.addMatchers(matchers);
-    },
+	addMatchers: function(matchers) {
+		return env.addMatchers(matchers);
+	},
 
-    spyOn: function(obj, methodName) {
-      return env.spyOn(obj, methodName);
-    }
+	spyOn: function(obj, methodName) {
+		return env.currentSpec.spyOn(obj, methodName);
+	},
+
+	runs: function(func) {
+		return env.currentSpec.runs(func);
+	},
+
+	waitsFor: function(latchFunction, optional_timeoutMessage, optional_timeout) {
+		return env.currentSpec.waitsFor(latchFunction, optional_timeoutMessage, optional_timeout);
+	},
+
+	jasmine: jasmine
 
 };
 
@@ -106,7 +116,7 @@ exports.addSpecModules = function(paths) {
 
 exports.execute = function() { 
 	var mod,
-		self = this;
+	self = this;
 
 	specFiles.forEach(function(path) {
 		require(path);
@@ -120,6 +130,6 @@ exports.addReporter = function(reporter) {
 };
 
 exports.infect = function(infectee) {
-  extend(infectee, jasmineInterface);
+	extend(infectee, jasmineInterface);
 };
 

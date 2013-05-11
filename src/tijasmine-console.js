@@ -16,15 +16,46 @@
 
 function ConsoleReporter(finishCallback) {
 	var startedAt,
-		sep = "-------------------------------------",
+		// iOS logs trim left, so we lose our indentation if
+		// we don't do something like this:
+		logPrefix = (Ti.Platform.osname === 'iphone' ? ".  " : ""),
+		separatorLength = 60,
+		levelIndentation = 3,
+		sep = Array(separatorLength + 1).join("-"),
+		bigsep = Array(separatorLength + 1).join("="),
 		failedCount = 0,
 		passedCount = 0,
-		runningSuite;
+		runningSuite,
+		failureRecaps,
+		topLevelSuites;
+
+	function isTopLevel(suite) {
+		return !suite.parentSuite;
+	}
+
+	function indent(suiteOrSpec) {
+		var level = 0,
+			parent;
+
+		if (suiteOrSpec.suite) {
+			// spec
+			return indent(suiteOrSpec.suite);
+		} else {
+			parent = suiteOrSpec.parentSuite;
+			while (parent) {
+				level++;
+				parent = parent.parentSuite;
+			}
+			return Array(level * levelIndentation + 1).join(" ");
+		}
+	}
 
 	this.reportRunnerStarting = function(runner) {
 		startedAt = new Date();
 		failedCount = passedCount = 0;
+		failureRecaps = [];
 		runningSuite = null;
+		topLevelSuites = runner.topLevelSuites();
 	};
 
 	this.reportRunnerResults = function(runner) {
@@ -35,11 +66,22 @@ function ConsoleReporter(finishCallback) {
 				elapsed: ((new Date()) - startedAt)
 			});
 		}
-		console.log(sep.replace(/-/g, "="));
+		console.log(logPrefix + bigsep);
 		if (failedCount) {
-			console.log("THERE WERE FAILURES");
+			// Order of log statements in iOS doesn't
+			// seem to be guaranteed. I want this last.
+			setTimeout(function() {
+				console.error(logPrefix + "THERE WERE FAILURES!");
+				console.error(logPrefix + bigsep);
+				console.error(logPrefix + "Recap of failing specs:");
+				console.error(logPrefix + sep);
+				failureRecaps.forEach(function(txt) {
+					console.error(logPrefix + txt);
+				});
+				console.error(logPrefix + sep);
+			},30);
 		} else {
-			console.log("Congratulations! All passed.");
+			console.log(logPrefix + "Congratulations! All passed.");
 		}
 	};
 
@@ -47,11 +89,15 @@ function ConsoleReporter(finishCallback) {
 	};
 
 	this.reportSpecStarting = function(spec) {
-		var suite = spec.suite;
+		var suite = spec.suite,
+			topLevel = isTopLevel(suite);
+
 		if (!runningSuite || runningSuite.id !== suite.id) {
 			runningSuite = suite;
-			console.log(sep);
-			console.log(suite.description + ":");
+			if (topLevel) {
+				console.log(logPrefix + sep);
+			}
+			console.log(logPrefix + indent(suite) + suite.description + ":");
 		}
 	};
 
@@ -59,14 +105,15 @@ function ConsoleReporter(finishCallback) {
 		var results = spec.results(),
 			item;
 
-		console.log(" - " + spec.description + " (" + (results.failedCount ? "FAILED" : "ok") + ")");
+		console.log(logPrefix + indent(spec) + " - " + spec.description + " (" + (results.failedCount ? "FAILED" : "ok") + ")");
 		passedCount += results.passedCount;
 		failedCount += results.failedCount;
 
 		if (results.items_) {
 			results.items_.forEach(function(item) {
 				if (!item.passed_ && item.message) {
-					console.log(" - - " + item.message);
+					console.log(logPrefix + indent(spec) + " - - " + item.message);
+					failureRecaps.push(spec.getFullName() + " - " + item.message);
 				}
 			});
 		}
