@@ -1,0 +1,14 @@
+{
+    "name": "ti-jasmine",
+    "repo": "starterstep/ti-jasmine",
+    "description": "A jasmine (Javascript testing) implementation for Appcelerator Titanium.",
+    "version": "0.0.1",
+    "keywords": ["titanium", "testing"],
+    "dependencies": {
+        "bestander/jasmine": "*"
+    },
+    "scripts": [
+        "src/tijasmine.js", "src/tijasmine-console.js"
+    ],
+    "main" : "src/tijasmine.js"
+}

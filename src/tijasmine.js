@@ -45,7 +45,7 @@
 */
 
 
-var jasmine = require("./jasmine").jasmine,
+var jasmine = require("jasmine").jasmine,
 	env = jasmine.getEnv(),
 	specFiles = [],
 	jasmineInterface;
@@ -119,7 +119,11 @@ exports.execute = function() {
 	self = this;
 
 	specFiles.forEach(function(path) {
-		require(path);
+        if (typeof path === 'function') {
+            path(exports.infect);
+        } else {
+		    require(path);
+        }
 	});
 
 	env.execute();
