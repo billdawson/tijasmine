@@ -9,5 +9,6 @@
     },
     "scripts": [
         "src/tijasmine.js", "src/tijasmine-console.js"
-    ]
+    ],
+    "main" : "src/tijasmine.js"
 }
