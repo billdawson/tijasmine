@@ -45,7 +45,7 @@
 */
 
 
-var jasmine = require("./jasmine").jasmine,
+var jasmine = require("jasmine").jasmine,
 	env = jasmine.getEnv(),
 	specFiles = [],
 	jasmineInterface;
