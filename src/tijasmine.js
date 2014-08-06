@@ -94,6 +94,10 @@ jasmineInterface = {
 	waitsFor: function(latchFunction, optional_timeoutMessage, optional_timeout) {
 		return env.currentSpec.waitsFor(latchFunction, optional_timeoutMessage, optional_timeout);
 	},
+	
+	waits: function(timeout) {
+        return env.currentSpec.waits(timeout);
+    },
 
 	jasmine: jasmine
 
