@@ -59,7 +59,7 @@ Jasmine is...
 
 ... and licensed under the MIT License (see [LICENSE-jasmine.txt][8]).
 
-[1]: http://pivotal.github.io/jasmine
+[1]: https://jasmine.github.io/
 [3]: src/tijasmine.js
 [4]: src/tijasmine-console.js
 [5]: build.sh
